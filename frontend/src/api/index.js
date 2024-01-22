@@ -37,7 +37,66 @@ export default class API {
 
         return true
     }
+/*
+    async findMovies(
+        {
+            filter: {genre = '', title = '', status = ''} = {genre: '', title: '', status: ''},
+            sort,
+            pagination: {page = 0, size = 7} = {page: 0, size: 7}
+        } = {
+            filter: {genre: '', title: '', status: ''},
+            sort: {},
+            pagination: {page: 0, size: 7}
+        }
+    ) {
+        try {
+            let queryString = ``;
+            //si page y size no son undefined, se añaden a la query
+            if (page !== undefined) {
+                queryString += `page=${page}`;
+            }
+            if (size !== undefined) {
+                queryString += `&size=${size}`;
+            }
 
+            if (title) {
+                queryString += `&title=${encodeURIComponent(title)}`;
+            }
+            if (genre) {
+                queryString += `&genre=${encodeURIComponent(genre)}`;
+            }
+            if (status) {
+                queryString += `&status=${encodeURIComponent(status)}`;
+            }
+            if (sort) {
+                queryString += `&sort=${encodeURIComponent(sort)}`;
+
+            }
+
+            console.log(`http://localhost:8080/movies?${queryString}`)
+
+            const response = await fetch(`http://localhost:8080/movies?${queryString}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+            });
+
+            if (response.ok) {
+                return await response.json();
+            } else {
+                // Manejar errores si la respuesta no es exitosa
+                const errorData = await response.json();
+                console.error('Error al obtener películas:', errorData);
+                throw new Error('Error al obtener películas');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            throw error; // Puedes manejar el error según tus necesidades
+        }
+    }
+*/
     async findMovies(
         {
             filter: {genre = '', title = '', status = ''} = {genre: '', title: '', status: ''},
@@ -65,7 +124,49 @@ export default class API {
 
             resolve(data)
         })
-    }
+    }/*
+    async findMovies(
+        {
+            filter: {genre = '', title = '', status = ''} = {genre: '', title: '', status: ''},
+            sort,
+            pagination: {page = 0, size = 7} = {page: 0, size: 7}
+        } = {
+            filter: {genre: '', title: '', status: ''},
+            sort: {},
+            pagination: {page: 0, size: 7}
+        }
+    ) {
+        return new Promise(async resolve => {
+
+            const movies = await fetch ('http://localhost:8080/movies', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },            })
+            const moviesJson = await movies.json()
+
+            console.log("PELIS AUX " +moviesJson.content)
+            moviesJson.content.forEach(movie => console.log(movie.title))
+
+            const filtered = moviesJson.content
+                ?.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase() || ''))
+                ?.filter(movie => genre !== '' ? movie.genres.map(genre => genre.toLowerCase()).includes(genre.toLowerCase()) : true)
+                ?.filter(movie => movie.status.toLowerCase().includes(status.toLowerCase() || ''))
+
+            const data = {
+                content: filtered?.slice(size * page, size * page + size),
+                pagination: {
+                    hasNext: size * page + size < filtered.length,
+                    hasPrevious: page > 0
+                }
+            }
+
+            resolve(data)
+        })
+    }*/
+
+
 
     async findMovie(id) {
         const response = await fetch(`http://localhost:8080/movies/${id}`, {
@@ -103,7 +204,6 @@ export default class API {
             const pathArray = window.location.pathname.split('/');
             const movieIdIndex = pathArray.indexOf('movies') + 1; // Index siguiente al de 'movies'
             movieId = movieIdIndex < pathArray.length ? pathArray[movieIdIndex] : '';
-            //movieId = '716354' //Esta pelicula tiene comentarios //TODO: PRuebas
             if (movieId) {
                 queryString += `movieId=${movieId}&`;
             }
@@ -192,7 +292,40 @@ export default class API {
     }
 
     async updateUser(id, user) {
-        console.log(user)
+        try {
+            // Crear un array de objetos en el formato esperado
+            const patchBody = Object.keys(user).map(key => {
+                return {
+                    op: "replace",
+                    path: `/${key}`,
+                    value: user[key]
+                };
+            });
+            const response = await fetch(`http://localhost:8080/users/${id}`, {
+                method: 'PATCH', // O el método que corresponda para actualizar usuarios en tu API
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(patchBody),
+            });
+            console.log(patchBody)
+
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                console.log('Usuario actualizado:', updatedUser);
+                return updatedUser;
+            } else {
+                // Manejar errores si la respuesta no es exitosa
+                const errorData = await response.json();
+                console.error('Error al actualizar el usuario:', errorData);
+                throw new Error('Error al actualizar el usuario');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            throw error; // Puedes manejar el error según tus necesidades
+        }
     }
 
 
@@ -217,6 +350,7 @@ export default class API {
                 },
                 body: JSON.stringify(patchBody),
             });
+            console.log(patchBody)
 
             if (response.ok) {
                 const updatedMovie = await response.json();
@@ -231,6 +365,81 @@ export default class API {
         } catch (error) {
             console.error('Error en la solicitud:', error);
             throw error; // Puedes manejar el error según tus necesidades
+        }
+    }
+
+
+
+    async eliminarAmistad(userID, friendID) {
+        let url = `http://localhost:8080/users/${userID}/friend/${friendID}`;
+        try {
+            const deleteFriend = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+            });
+
+            // Verificar si la respuesta tiene contenido antes de intentar parsearla
+            if (!deleteFriend.ok) {
+                throw new Error(`Error al eliminar amistad: ${deleteFriend.statusText}`);
+            }
+
+            // Verificar si hay contenido en la respuesta antes de intentar parsearla
+            const responseText = await deleteFriend.text();
+            if (!responseText) {
+                return null; // O manejar el caso donde no hay contenido
+            }
+
+            return JSON.parse(responseText);
+        } catch (error) {
+            console.error('Error al eliminar amistad:', error);
+            throw error;
+        }
+    }
+
+    async searchFriends(user) {
+        let url = `http://localhost:8080/users/${user}/friends/`
+        const friends = await fetch(url,{
+            method: "GET",
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')}})
+        let finalFriends = await friends.json()
+        return await finalFriends
+    }
+
+
+    //añadir amigo sabiendo que la url es /users/{id}/friend y hay que poner tu id de usuario y de body el name y el email del amigo
+    async anhadirAmigo(userID, name, email) {
+        let url = `http://localhost:8080/users/${userID}/friend`;
+        try {
+            const addFriend = await fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ email: email,name: name})
+            });
+            console.log(JSON.stringify({ email: email,name: name}))
+
+
+            // Verificar si la respuesta tiene contenido antes de intentar parsearla
+            if (!addFriend.ok) {
+                throw new Error(`Error al añadir amigo: ${addFriend.statusText}`);
+            }
+
+            // Verificar si hay contenido en la respuesta antes de intentar parsearla
+            const responseText = await addFriend.text();
+            if (!responseText) {
+                return null; // O manejar el caso donde no hay contenido
+            }
+
+            return JSON.parse(responseText);
+        } catch (error) {
+            console.error('Error al añadir amigo:', error);
+            throw error;
         }
     }
 }

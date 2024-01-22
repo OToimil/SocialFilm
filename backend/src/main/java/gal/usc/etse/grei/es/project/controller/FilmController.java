@@ -129,29 +129,30 @@ public class FilmController {
                                                   @RequestParam(value = "keyword", required = false) String keyword,
                                                   @RequestParam(value = "genre", required = false) String genre,
                                                   @RequestParam(value = "credit", required = false) String credit,
+                                                  @RequestParam(value = "credit", required = false) String status,
                                                   @RequestParam(value = "releaseDate", required = false) String releaseDate) {
 
         //hateoas
-        Optional<Page<Film>> result = Optional.ofNullable(filmService.getAllFilms(page, size, sort, keyword, genre, credit, releaseDate));
+        Optional<Page<Film>> result = Optional.ofNullable(filmService.getAllFilms(page, size, sort, keyword, genre, credit, status, releaseDate));
 
         if(result.isPresent()) {
             Page<Film> data = result.get();
             Pageable metadata = data.getPageable();
 
             Link self = linkTo(
-                    methodOn(FilmController.class).getAllFilms(metadata.getPageNumber(), size, sort, keyword, genre, credit, releaseDate)
+                    methodOn(FilmController.class).getAllFilms(metadata.getPageNumber(), size, sort, keyword, genre, credit, status, releaseDate)
             ).withSelfRel();
             Link first = linkTo(
-                    methodOn(FilmController.class).getAllFilms(0, size, sort, keyword, genre, credit, releaseDate)
+                    methodOn(FilmController.class).getAllFilms(0, size, sort, keyword, genre, credit, status, releaseDate)
             ).withRel(IanaLinkRelations.FIRST);
             Link last = linkTo(
-                    methodOn(FilmController.class).getAllFilms(data.getTotalPages() - 1, size, sort, keyword, genre, credit, releaseDate)
+                    methodOn(FilmController.class).getAllFilms(data.getTotalPages() - 1, size, sort, keyword, genre, credit,status, releaseDate)
             ).withRel(IanaLinkRelations.LAST);
             Link next = linkTo(
-                    methodOn(FilmController.class).getAllFilms(metadata.next().getPageNumber(), size, sort, keyword, genre, credit, releaseDate)
+                    methodOn(FilmController.class).getAllFilms(metadata.next().getPageNumber(), size, sort, keyword, genre, credit,status, releaseDate)
             ).withRel(IanaLinkRelations.NEXT);
             Link previous = linkTo(
-                    methodOn(FilmController.class).getAllFilms(metadata.previousOrFirst().getPageNumber(), size, sort, keyword, genre, credit, releaseDate)
+                    methodOn(FilmController.class).getAllFilms(metadata.previousOrFirst().getPageNumber(), size, sort, keyword, genre, credit, status, releaseDate)
             ).withRel(IanaLinkRelations.PREVIOUS);
 
             Link one = linkTo(

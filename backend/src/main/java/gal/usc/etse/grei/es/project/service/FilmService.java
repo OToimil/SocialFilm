@@ -47,7 +47,7 @@ public class FilmService {
         return films.save(film);
     }
 
-    public Page<Film> getAllFilms(int page, int size, String sort, String keyword, String genre, String credit, String releaseDate) {
+    public Page<Film> getAllFilms(int page, int size, String sort, String keyword, String genre, String credit, String status, String releaseDate) {
         Pageable request = PageRequest.of(page, size, Sort.by(sort).ascending());
 
         List<String> genres = null;
@@ -74,6 +74,7 @@ public class FilmService {
         if (genre != null) query.addCriteria(Criteria.where("genres").all(genres));
 
         if (keyword != null) query.addCriteria(Criteria.where("keywords").all(keywords));
+        if (status != null) query.addCriteria(Criteria.where("status").is(status));
 
         if (credit != null) {
             List<Criteria> criteriaList = new ArrayList<>();
@@ -94,7 +95,7 @@ public class FilmService {
 
         if (releaseDate != null) query.addCriteria(Criteria.where("releaseDate").all(date));
 
-        query.fields().exclude("tagline").exclude("producers").exclude("crew").exclude("cast").exclude("producers").exclude("budget").exclude("status");
+        query.fields().exclude("tagline").exclude("producers").exclude("crew").exclude("cast").exclude("producers").exclude("budget");
 
         List <Film> filmss = mongoTemplate.find(query,Film.class);
         //https://stackoverflow.com/questions/29030542/pagination-with-mongotemplate

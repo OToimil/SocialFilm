@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bcb763cd-e764-4499-9201-be3f91d4255f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/gal/usc/etse/grei/es/project/controller/FilmController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/gal/usc/etse/grei/es/project/controller/FilmController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/gal/usc/etse/grei/es/project/service/FilmService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/gal/usc/etse/grei/es/project/service/FilmService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gal/usc/etse/grei/es/project/controller/FilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gal/usc/etse/grei/es/project/controller/FilmController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gal/usc/etse/grei/es/project/service/FilmService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gal/usc/etse/grei/es/project/service/FilmService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/movie/MovieList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/movie/MovieList.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +34,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -59,11 +69,12 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Escritorio/USC/4 CURSO/1 CUATRIMESTRE/INGENIERIA DE SERVICIOS/Entrega2/proxectoSocialFilm/proxectoSocialFilm&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/davidpacios/proxectoSocialFilm/frontend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;517c9bf561fff80d0939579cf333951d&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -101,8 +112,14 @@
       <workItem from="1703013931177" duration="654000" />
       <workItem from="1703060931352" duration="1630000" />
       <workItem from="1703063355001" duration="444000" />
-      <workItem from="1703063980657" duration="58000" />
-      <workItem from="1703066821558" duration="683000" />
+      <workItem from="1703327783838" duration="2003000" />
+      <workItem from="1704134794322" duration="4648000" />
+      <workItem from="1704187270037" duration="2919000" />
+      <workItem from="1704210869376" duration="151000" />
+      <workItem from="1704211418949" duration="1414000" />
+      <workItem from="1704225053771" duration="168000" />
+      <workItem from="1704225560956" duration="1296000" />
+      <workItem from="1705053719331" duration="1679000" />
     </task>
     <servers />
   </component>

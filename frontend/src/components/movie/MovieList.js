@@ -53,16 +53,30 @@ export function MovieList({
         </section>
 }
 
-function Poster({className = '', movie}) {
-    return <li className = {`w-full transition transform cursor-pointer rounded-md bg-white overflow-hidden relative shadow
-                             hover:scale-125 hover:shadow-md hover:z-20
-                             ${className}`}
-               style = {{ aspectRatio: '2/3' }}
+
+function Poster({ className = '', movie }) {
+    const posterURL = movie.resources && movie.resources.find(res => res.type === 'POSTER');
+    if (!posterURL) {
+        return <div>No se pudo encontrar el poster</div>;
+    }
+
+    return <li
+        className={`w-full transition transform cursor-pointer rounded-md bg-white overflow-hidden relative shadow
+                        hover:scale-125 hover:shadow-md hover:z-20
+                        ${className}`}
+        style={{ aspectRatio: '2/3' }}
     >
-        <Link to = { `/movies/${movie.id}` }>
-            <img className = 'w-full h-full object-cover'
-                 src = { movie.resources.find(res => res.type === 'POSTER').url }
-                 alt = { `${movie.title } poster` } />
+        <Link to={`/movies/${movie.id}`}>
+            <img className='w-full h-full object-cover'
+                src={
+                    movie.resources.find(res => res.type === 'POSTER').url
+
+                }
+                alt={`${movie.title} poster`}
+            />
         </Link>
     </li>
+
+
+
 }
